@@ -8,7 +8,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityPlacemarkBinding
 import org.wit.placemark.main.MainApp
-import PlacemarkModel
+import org.wit.placemark.models.PlacemarkModel
 import timber.log.Timber
 import timber.log.Timber.i
 
@@ -42,7 +42,7 @@ class PlacemarkActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             placemark.title = binding.placemarkTitle.text.toString()
             placemark.description = binding.description.text.toString()
-            if (placemark.title.isNotEmpty()) {
+            if (placemark.title.isEmpty()) {
                 Snackbar.make(it,R.string.enter_placemark_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {

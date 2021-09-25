@@ -1,10 +1,10 @@
 package org.wit.placemark.adapters
 
-import PlacemarkModel
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.placemark.databinding.CardPlacemarkBinding
+import org.wit.placemark.models.PlacemarkModel
 
 interface PlacemarkListener {
     fun onPlacemarkClick(placemark: PlacemarkModel)

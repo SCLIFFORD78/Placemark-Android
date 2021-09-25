@@ -1,3 +1,5 @@
+package org.wit.placemark.models
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

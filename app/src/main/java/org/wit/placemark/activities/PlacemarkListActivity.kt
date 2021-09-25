@@ -1,6 +1,5 @@
 package org.wit.placemark.activities
 
-import PlacemarkModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +11,7 @@ import org.wit.placemark.adapters.PlacemarkAdapter
 import org.wit.placemark.adapters.PlacemarkListener
 import org.wit.placemark.databinding.ActivityPlacemarkListBinding
 import org.wit.placemark.main.MainApp
+import org.wit.placemark.models.PlacemarkModel
 
 
 class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {

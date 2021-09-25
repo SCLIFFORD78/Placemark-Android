@@ -1,6 +1,5 @@
 package org.wit.placemark.models
 
-import PlacemarkModel
 import timber.log.Timber.i
 
 var lastId = 0L
