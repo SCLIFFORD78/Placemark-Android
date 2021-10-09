@@ -1,24 +1,33 @@
 package org.wit.placemark.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityPlacemarkBinding
+import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
 import timber.log.Timber
 import timber.log.Timber.i
 
 class PlacemarkActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityPlacemarkBinding
     var placemark = PlacemarkModel()
     lateinit var app: MainApp
 
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        registerImagePickerCallback()
 
         var edit = false
 
@@ -29,7 +38,7 @@ class PlacemarkActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        i("PlacemarkActivity started")
+        i("Placemark Activity started...")
 
         if (intent.hasExtra("placemark_edit")) {
             edit = true
@@ -46,15 +55,23 @@ class PlacemarkActivity : AppCompatActivity() {
                 Snackbar.make(it,R.string.enter_placemark_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                if (edit){
+                if (edit) {
                     app.placemarks.update(placemark.copy())
-                }else{
+                } else {
                     app.placemarks.create(placemark.copy())
                 }
             }
             i("add Button Pressed: $placemark")
             setResult(RESULT_OK)
             finish()
+        }
+
+        binding.chooseImage.setOnClickListener {
+            i("Select image")
+        }
+
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
         }
     }
 
@@ -70,5 +87,20 @@ class PlacemarkActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }
