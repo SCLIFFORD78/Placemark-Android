@@ -47,6 +47,7 @@ class PlacemarkActivity : AppCompatActivity() {
             binding.placemarkTitle.setText(placemark.title)
             binding.description.setText(placemark.description)
             binding.btnAdd.setText(R.string.save_placemark)
+            binding.chooseImage.setText(R.string.button_changeImage)
             Picasso.get()
                 .load(placemark.image)
                 .into(binding.placemarkImage)
