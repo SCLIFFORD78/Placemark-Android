@@ -3,6 +3,7 @@ package org.wit.placemark.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.placemark.databinding.CardPlacemarkBinding
 import org.wit.placemark.models.PlacemarkModel
 
@@ -12,11 +13,11 @@ interface PlacemarkListener {
 
 class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
                                    private val listener: PlacemarkListener) :
-    RecyclerView.Adapter<PlacemarkAdapter.MainHolder>() {
+        RecyclerView.Adapter<PlacemarkAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardPlacemarkBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+                .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding)
     }
@@ -29,12 +30,12 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
     override fun getItemCount(): Int = placemarks.size
 
     class MainHolder(private val binding : CardPlacemarkBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
 
         fun bind(placemark: PlacemarkModel, listener: PlacemarkListener) {
             binding.placemarkTitle.text = placemark.title
             binding.description.text = placemark.description
-            binding.placemarkImage.setImageURI(placemark.image)
+            Picasso.get().load(placemark.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onPlacemarkClick(placemark) }
         }
     }
