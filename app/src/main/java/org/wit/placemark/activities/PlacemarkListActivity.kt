@@ -37,6 +37,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
         registerRefreshCallback()
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -63,7 +64,6 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { loadPlacemarks() }
     }
-
     private fun loadPlacemarks() {
         showPlacemarks(app.placemarks.findAll())
     }

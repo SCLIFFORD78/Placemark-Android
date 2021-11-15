@@ -16,6 +16,8 @@ class MainApp : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         placemarks = PlacemarkJSONStore(applicationContext)
+
         i("Placemark started")
+
     }
 }

@@ -17,7 +17,7 @@ import org.wit.placemark.models.Location
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback,
                                 GoogleMap.OnMarkerDragListener,
-                                GoogleMap.OnMarkerClickListener{
+                                GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
     var location = Location()
@@ -55,7 +55,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
         location.lat = marker.position.latitude
         location.lng = marker.position.longitude
         location.zoom = map.cameraPosition.zoom
+    }
 
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val loc = LatLng(location.lat, location.lng)
+        marker.snippet = "GPS : $loc"
+        return false
     }
 
     override fun onBackPressed() {
@@ -64,10 +69,5 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
         super.onBackPressed()
-    }
-    override fun onMarkerClick(marker: Marker): Boolean {
-        val loc = LatLng(location.lat, location.lng)
-        marker.snippet = "GPS : $loc"
-        return false
     }
 }
