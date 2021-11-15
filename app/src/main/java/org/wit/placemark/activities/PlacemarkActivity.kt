@@ -22,7 +22,7 @@ import org.wit.placemark.showImagePicker
 import timber.log.Timber
 import timber.log.Timber.i
 
-class PlacemarkActivity : AppCompatActivity() {
+class PlacemarkActivity : AppCompatActivity()  {
 
     private lateinit var binding: ActivityPlacemarkBinding
     var placemark = PlacemarkModel()
@@ -30,11 +30,12 @@ class PlacemarkActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     //var location = Location(52.245696, -7.139102, 15f)
+    var edit = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var edit = false
+        edit = false
 
         binding = ActivityPlacemarkBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -97,13 +98,18 @@ class PlacemarkActivity : AppCompatActivity() {
         registerMapCallback()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_placemark, menu)
+        if (edit && menu != null) menu.getItem(0).setVisible(true)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        when (item?.itemId) {
+            R.id.item_delete -> {
+                app.placemarks.delete(placemark)
+                finish()
+            }
             R.id.item_cancel -> {
                 finish()
             }
