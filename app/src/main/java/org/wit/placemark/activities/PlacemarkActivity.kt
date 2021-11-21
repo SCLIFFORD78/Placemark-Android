@@ -22,7 +22,7 @@ import org.wit.placemark.showImagePicker
 import timber.log.Timber
 import timber.log.Timber.i
 
-class PlacemarkActivity : AppCompatActivity()  {
+class PlacemarkActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlacemarkBinding
     var placemark = PlacemarkModel()
@@ -30,7 +30,7 @@ class PlacemarkActivity : AppCompatActivity()  {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     //var location = Location(52.245696, -7.139102, 15f)
-    var edit = false;
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

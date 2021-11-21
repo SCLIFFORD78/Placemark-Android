@@ -34,9 +34,13 @@ class PlacemarkMemStore : PlacemarkStore {
             logAll()
         }
     }
-
     override fun delete(placemark: PlacemarkModel) {
         placemarks.remove(placemark)
+    }
+
+    override fun findById(id:Long) : PlacemarkModel? {
+        val foundPlacemark: PlacemarkModel? = placemarks.find { it.id == id }
+        return foundPlacemark
     }
 
     private fun logAll() {
