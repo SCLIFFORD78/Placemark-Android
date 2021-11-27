@@ -56,10 +56,10 @@ class PlacemarkJSONStore(private val context: Context) : PlacemarkStore {
     }
 
     override fun delete(placemark: PlacemarkModel) {
-        placemarks.remove(placemark)
+        val foundPlacemark: PlacemarkModel? = placemarks.find { it.id == placemark.id }
+        placemarks.remove(foundPlacemark)
         serialize()
     }
-
     override fun findById(id:Long) : PlacemarkModel? {
         val foundPlacemark: PlacemarkModel? = placemarks.find { it.id == id }
         return foundPlacemark
