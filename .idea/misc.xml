@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/sclifford/Documents/Placemark-Android/app/src/main/res/layout/activity_map.xml" value="0.14537037037037037" />
         <entry key="..\:/Users/sclifford/Documents/Placemark-Android/app/src/main/res/layout/activity_placemark.xml" value="0.33" />
         <entry key="..\:/Users/sclifford/Documents/Placemark-Android/app/src/main/res/layout/activity_placemark_maps.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/sclifford/Documents/Placemark-Android/app/src/main/res/layout/activity_placemark_update_location.xml" value="0.18085106382978725" />
         <entry key="..\:/Users/sclifford/Documents/Placemark-Android/app/src/main/res/layout/content_placemark_maps.xml" value="0.18085106382978725" />
+        <entry key="..\:/Users/sclifford/Documents/Placemark-Android/app/src/main/res/menu/menu_placemark.xml" value="0.33055555555555555" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/activity_new.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/activity_placemark.xml" value="0.25" />
