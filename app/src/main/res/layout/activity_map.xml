@@ -6,8 +6,4 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     tools:context=".views.location.EditLocationView" />
-=======
-    tools:context=".views.editlocation.EditLocationView" />
->>>>>>> c14e6a5eecc124adcd861bf23cd5952e69bf0641

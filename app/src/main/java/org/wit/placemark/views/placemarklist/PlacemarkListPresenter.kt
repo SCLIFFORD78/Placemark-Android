@@ -5,18 +5,18 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.views.editlocation.EditLocationView
 import org.wit.placemark.views.placemark.PlacemarkView
+import org.wit.placemark.views.map.PlacemarkMapView
 
 class PlacemarkListPresenter(val view: PlacemarkListView) {
 
-    var app: MainApp
+    var app: MainApp = view.application as MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var editIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     init {
-        app = view.application as MainApp
-        registerMapCallback()
+        registerEditCallback()
         registerRefreshCallback()
     }
 
@@ -24,27 +24,28 @@ class PlacemarkListPresenter(val view: PlacemarkListView) {
 
     fun doAddPlacemark() {
         val launcherIntent = Intent(view, PlacemarkView::class.java)
-        refreshIntentLauncher.launch(launcherIntent)
+        editIntentLauncher.launch(launcherIntent)
     }
 
     fun doEditPlacemark(placemark: PlacemarkModel) {
         val launcherIntent = Intent(view, PlacemarkView::class.java)
         launcherIntent.putExtra("placemark_edit", placemark)
-        mapIntentLauncher.launch(launcherIntent)
+        editIntentLauncher.launch(launcherIntent)
     }
 
     fun doShowPlacemarksMap() {
-        val launcherIntent = Intent(view, EditLocationView::class.java)
-        refreshIntentLauncher.launch(launcherIntent)
+        val launcherIntent = Intent(view, PlacemarkMapView::class.java)
+        editIntentLauncher.launch(launcherIntent)
     }
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { getPlacemarks() }
     }
-    private fun registerMapCallback() {
-        mapIntentLauncher =
+    private fun registerEditCallback() {
+        editIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             {  }
+
     }
 }
