@@ -12,6 +12,12 @@
     <string name="select_placemark_image">Select image</string>
     <string name="change_placemark_image">Change image</string>
     <string name="button_location">Set Location</string>
+<<<<<<< HEAD
+=======
+    <string name="menu_deletePlacemark">Delete</string>
+    <string name="item_save">Save</string>
+    item_save
+>>>>>>> c14e6a5eecc124adcd861bf23cd5952e69bf0641
     <string name="title_activity_map">Map</string>
     <string name="title_activity_placemark_maps">Map of all Placemarks</string>
     <!-- Strings used for fragments for navigation -->

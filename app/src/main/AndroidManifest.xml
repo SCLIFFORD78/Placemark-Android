@@ -14,8 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Placemark">
         <activity
+<<<<<<< HEAD
             android:name=".views.map.PlacemarkMapView"
             android:exported="true"
+=======
+            android:name=".activities.PlacemarkMapsActivity"
+            android:exported="false"
+>>>>>>> c14e6a5eecc124adcd861bf23cd5952e69bf0641
             android:label="@string/title_activity_placemark_maps"
             android:theme="@style/Theme.Placemark.NoActionBar" />
 
@@ -24,7 +29,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
+<<<<<<< HEAD
             android:name=".views.location.EditLocationView"
+=======
+            android:name=".views.editlocation.EditLocationView"
+>>>>>>> c14e6a5eecc124adcd861bf23cd5952e69bf0641
             android:exported="true"
             android:label="@string/title_activity_map" />
         <activity
