@@ -103,8 +103,8 @@ class PlacemarkView : AppCompatActivity() {
         if (placemark.image != Uri.EMPTY) {
             binding.chooseImage.setText(R.string.change_placemark_image)
         }
-        binding.lat.setText("%.6f".format(placemark.lat))
-        binding.lng.setText("%.6f".format(placemark.lng))
+        binding.lat.setText("%.6f".format(placemark.location.lat))
+        binding.lng.setText("%.6f".format(placemark.location.lng))
 
     }
 

@@ -22,16 +22,14 @@ class PlacemarkMemStore : PlacemarkStore {
         logAll()
     }
 
-    override suspend fun update(placemark: PlacemarkModel) {
-        val foundPlacemark: PlacemarkModel? = placemarks.find { p -> p.id == placemark.id }
+    suspend override fun update(placemark: PlacemarkModel) {
+        var foundPlacemark: PlacemarkModel? = placemarks.find { p -> p.id == placemark.id }
         if (foundPlacemark != null) {
             foundPlacemark.title = placemark.title
             foundPlacemark.description = placemark.description
             foundPlacemark.image = placemark.image
-            foundPlacemark.lat = placemark.lat
-            foundPlacemark.lng = placemark.lng
-            foundPlacemark.zoom = placemark.zoom
-            logAll()
+            foundPlacemark.location = placemark.location
+            logAll();
         }
     }
     override suspend fun delete(placemark: PlacemarkModel) {
