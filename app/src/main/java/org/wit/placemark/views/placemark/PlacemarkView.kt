@@ -132,4 +132,6 @@ class PlacemarkView : AppCompatActivity() {
         binding.mapView2.onSaveInstanceState(outState)
     }
 
+
+
 }

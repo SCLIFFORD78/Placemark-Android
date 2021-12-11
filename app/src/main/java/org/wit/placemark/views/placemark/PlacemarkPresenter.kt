@@ -144,6 +144,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
         placemark.description = description
     }
 
+
     private fun registerImagePickerCallback() {
 
         imageIntentLauncher =
