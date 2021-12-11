@@ -24,4 +24,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="menu_savePlacemark">Save</string>
     <string name="menu_deletePlacemark">Delete</string>
+
+    <string name="title_activity_login"> Signup/Login to Placemark</string>
 </resources>
