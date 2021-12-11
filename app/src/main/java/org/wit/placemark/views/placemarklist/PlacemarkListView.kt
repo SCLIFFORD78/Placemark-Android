@@ -4,6 +4,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.wit.placemark.R
 import org.wit.placemark.adapters.PlacemarkAdapter
 import org.wit.placemark.adapters.PlacemarkListener
@@ -30,8 +33,7 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter =
-        PlacemarkAdapter(presenter.getPlacemarks(), this)
+        updateRecyclerView()
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,6 +60,13 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
     override fun onPlacemarkClick(placemark: PlacemarkModel) {
         presenter.doEditPlacemark(placemark)
 
+    }
+
+    private fun updateRecyclerView(){
+        GlobalScope.launch(Dispatchers.Main){
+            binding.recyclerView.adapter =
+                PlacemarkAdapter(presenter.getPlacemarks(), this@PlacemarkListView)
+        }
     }
 
 }

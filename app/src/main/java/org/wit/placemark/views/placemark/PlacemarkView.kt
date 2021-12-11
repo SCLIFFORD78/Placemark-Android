@@ -8,6 +8,9 @@ import android.view.MenuItem
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityPlacemarkBinding
 import org.wit.placemark.models.PlacemarkModel
@@ -68,11 +71,18 @@ class PlacemarkView : AppCompatActivity() {
                     Snackbar.make(binding.root, R.string.enter_placemark_title, Snackbar.LENGTH_LONG)
                         .show()
                 } else {
-                    presenter.doAddOrSave(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+                    GlobalScope.launch(Dispatchers.IO) {
+                        presenter.doAddOrSave(
+                            binding.placemarkTitle.text.toString(),
+                            binding.description.text.toString()
+                        )
+                    }
                 }
             }
             R.id.item_delete -> {
-                presenter.doDelete()
+                GlobalScope.launch(Dispatchers.IO){
+                    presenter.doDelete()
+                }
             }
             R.id.item_cancel -> {
                 presenter.doCancel()
@@ -83,8 +93,8 @@ class PlacemarkView : AppCompatActivity() {
     }
 
     fun showPlacemark(placemark: PlacemarkModel) {
-        binding.placemarkTitle.setText(placemark.title)
-        binding.description.setText(placemark.description)
+        if (binding.placemarkTitle.text.isEmpty()) binding.placemarkTitle.setText(placemark.title)
+        if (binding.description.text.isEmpty())  binding.description.setText(placemark.description)
 
         Picasso.get()
             .load(placemark.image)
@@ -131,7 +141,5 @@ class PlacemarkView : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         binding.mapView2.onSaveInstanceState(outState)
     }
-
-
 
 }

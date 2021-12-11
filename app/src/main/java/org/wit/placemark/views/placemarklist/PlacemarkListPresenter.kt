@@ -3,6 +3,9 @@ package org.wit.placemark.views.placemarklist
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.views.placemark.PlacemarkView
@@ -20,7 +23,7 @@ class PlacemarkListPresenter(val view: PlacemarkListView) {
         registerRefreshCallback()
     }
 
-    fun getPlacemarks() = app.placemarks.findAll()
+    suspend fun getPlacemarks() = app.placemarks.findAll()
 
     fun doAddPlacemark() {
         val launcherIntent = Intent(view, PlacemarkView::class.java)
@@ -40,7 +43,11 @@ class PlacemarkListPresenter(val view: PlacemarkListView) {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { getPlacemarks() }
+            {
+                GlobalScope.launch(Dispatchers.Main){
+                    getPlacemarks()
+                }
+            }
     }
     private fun registerEditCallback() {
         editIntentLauncher =

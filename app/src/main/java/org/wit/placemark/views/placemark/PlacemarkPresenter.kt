@@ -59,7 +59,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     }
 
 
-    fun doAddOrSave(title: String, description: String) {
+    suspend fun doAddOrSave(title: String, description: String) {
         placemark.title = title
         placemark.description = description
         if (edit) {
@@ -77,7 +77,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
 
     }
 
-    fun doDelete() {
+    suspend fun doDelete() {
         app.placemarks.delete(placemark)
         view.finish()
 
@@ -144,7 +144,6 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
         placemark.description = description
     }
 
-
     private fun registerImagePickerCallback() {
 
         imageIntentLauncher =
@@ -188,13 +187,13 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     private fun doPermissionLauncher() {
         i("permission check called")
         requestPermissionLauncher =
-        view.registerForActivityResult(ActivityResultContracts.RequestPermission())
-        { isGranted: Boolean ->
-            if (isGranted) {
-                doSetCurrentLocation()
-            } else {
-                locationUpdate(location.lat, location.lng)
+            view.registerForActivityResult(ActivityResultContracts.RequestPermission())
+            { isGranted: Boolean ->
+                if (isGranted) {
+                    doSetCurrentLocation()
+                } else {
+                    locationUpdate(location.lat, location.lng)
+                }
             }
-        }
     }
 }
