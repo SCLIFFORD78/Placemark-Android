@@ -152,7 +152,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
                     AppCompatActivity.RESULT_OK -> {
                         if (result.data != null) {
                             Timber.i("Got Result ${result.data!!.data}")
-                            placemark.image = result.data!!.data!!
+                            placemark.image = result.data!!.data!!.toString()
                             view.updateImage(placemark.image)
                         }
                     }
@@ -184,13 +184,13 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     private fun doPermissionLauncher() {
         i("permission check called")
         requestPermissionLauncher =
-            view.registerForActivityResult(ActivityResultContracts.RequestPermission())
-            { isGranted: Boolean ->
-                if (isGranted) {
-                    doSetCurrentLocation()
-                } else {
-                    locationUpdate(location.lat, location.lng)
-                }
+        view.registerForActivityResult(ActivityResultContracts.RequestPermission())
+        { isGranted: Boolean ->
+            if (isGranted) {
+                doSetCurrentLocation()
+            } else {
+                locationUpdate(location.lat, location.lng)
             }
+        }
     }
 }

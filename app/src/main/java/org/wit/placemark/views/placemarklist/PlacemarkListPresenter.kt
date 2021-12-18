@@ -9,18 +9,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.views.login.LoginPresenter
 import org.wit.placemark.views.login.LoginView
 import org.wit.placemark.views.placemark.PlacemarkView
 import org.wit.placemark.views.map.PlacemarkMapView
 
-class PlacemarkListPresenter(val view: PlacemarkListView) {
+class PlacemarkListPresenter(private val view: PlacemarkListView) {
 
     var app: MainApp = view.application as MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var editIntentLauncher : ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     init {
         registerEditCallback()
@@ -44,6 +41,14 @@ class PlacemarkListPresenter(val view: PlacemarkListView) {
         val launcherIntent = Intent(view, PlacemarkMapView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }
+
+    suspend fun doLogout(){
+        FirebaseAuth.getInstance().signOut()
+        app.placemarks.clear()
+        val launcherIntent = Intent(view, LoginView::class.java)
+        editIntentLauncher.launch(launcherIntent)
+    }
+
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -58,11 +63,5 @@ class PlacemarkListPresenter(val view: PlacemarkListView) {
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             {  }
 
-    }
-
-    fun doLogout(){
-        val launcherIntent = Intent(view, LoginView::class.java)
-        editIntentLauncher.launch(launcherIntent)
-        auth!!.signOut()
     }
 }

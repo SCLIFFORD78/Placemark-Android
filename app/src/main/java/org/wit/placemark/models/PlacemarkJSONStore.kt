@@ -41,7 +41,7 @@ class PlacemarkJSONStore(private val context: Context) : PlacemarkStore {
     }
 
 
-    suspend override fun update(placemark: PlacemarkModel) {
+    override suspend fun update(placemark: PlacemarkModel) {
         val placemarksList = findAll() as ArrayList<PlacemarkModel>
         var foundPlacemark: PlacemarkModel? = placemarksList.find { p -> p.id == placemark.id }
         if (foundPlacemark != null) {
@@ -75,6 +75,9 @@ class PlacemarkJSONStore(private val context: Context) : PlacemarkStore {
 
     private fun logAll() {
         placemarks.forEach { Timber.i("$it") }
+    }
+    override suspend fun clear(){
+        placemarks.clear()
     }
 }
 

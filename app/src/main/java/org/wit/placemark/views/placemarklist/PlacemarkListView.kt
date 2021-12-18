@@ -4,9 +4,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.*
 import org.wit.placemark.R
 import org.wit.placemark.adapters.PlacemarkAdapter
 import org.wit.placemark.adapters.PlacemarkListener
@@ -22,19 +21,23 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
     lateinit var presenter: PlacemarkListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        i("Recycler View Loaded")
+
         super.onCreate(savedInstanceState)
         binding = ActivityPlacemarkListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
-        presenter = PlacemarkListPresenter(this)
-        //app = application as MainApp
 
+        //update Toolbar title
+        binding.toolbar.title = title
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            binding.toolbar.title = "${title}: ${user.email}"
+        }
+        setSupportActionBar(binding.toolbar)
+
+        presenter = PlacemarkListPresenter(this)
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         updateRecyclerView()
-
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -42,10 +45,13 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
     }
 
     override fun onResume() {
+
         //update the view
+        super.onResume()
+        updateRecyclerView()
         binding.recyclerView.adapter?.notifyDataSetChanged()
         i("recyclerView onResume")
-        super.onResume()
+
     }
 
 
@@ -53,7 +59,11 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
         when (item.itemId) {
             R.id.item_add -> { presenter.doAddPlacemark() }
             R.id.item_map -> { presenter.doShowPlacemarksMap() }
-            R.id.item_logout -> { presenter.doLogout() }
+            R.id.item_logout -> {
+                GlobalScope.launch(Dispatchers.IO) {
+                    presenter.doLogout()
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
