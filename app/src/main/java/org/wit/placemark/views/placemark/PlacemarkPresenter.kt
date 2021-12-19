@@ -28,6 +28,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     var map: GoogleMap? = null
     var placemark = PlacemarkModel()
     var app: MainApp = view.application as MainApp
+    var locationManualyChanged = false;
     //location service
     var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
@@ -88,6 +89,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     }
 
     fun doSetLocation() {
+        locationManualyChanged = true;
 
         if (placemark.location.zoom != 0f) {
 
@@ -115,7 +117,9 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult != null && locationResult.locations != null) {
                     val l = locationResult.locations.last()
-                    locationUpdate(l.latitude, l.longitude)
+                    if(!locationManualyChanged){
+                        locationUpdate(l.latitude, l.longitude)
+                    }
                 }
             }
         }
@@ -184,13 +188,13 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     private fun doPermissionLauncher() {
         i("permission check called")
         requestPermissionLauncher =
-        view.registerForActivityResult(ActivityResultContracts.RequestPermission())
-        { isGranted: Boolean ->
-            if (isGranted) {
-                doSetCurrentLocation()
-            } else {
-                locationUpdate(location.lat, location.lng)
+            view.registerForActivityResult(ActivityResultContracts.RequestPermission())
+            { isGranted: Boolean ->
+                if (isGranted) {
+                    doSetCurrentLocation()
+                } else {
+                    locationUpdate(location.lat, location.lng)
+                }
             }
-        }
     }
 }
